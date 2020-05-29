@@ -1,0 +1,38 @@
+version: '3.5'
+
+services:
+  aenaeri-app:
+    build: .
+    ports:
+      - "3001:3001"
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - .:/home/app/appDir
+    depends_on:
+      - postgres
+    environment:
+      - NODE_ENV=development
+      - SESSION_SECRET=ADfgajk23dsS!
+    networks:
+      - backend
+    command: npm run dev
+  postgres:
+    image: 'postgres:11.5'
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=memomemomemo
+      - POSTGRES_PASSWORD=koirajoimatoa23
+      - POSTGRES_DB=memopgdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    logging:
+      driver: 'none'
+ 
+networks:
+  backend:
