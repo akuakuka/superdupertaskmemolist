@@ -34,5 +34,6 @@ export const updatePanel = async (User:User,panelID,title) => {
     const newPanel = await Panel.findOne({userID:User,panelID:panelID})
     newPanel.title = title;
     await newPanel.save();
+    
     return newPanel
 }

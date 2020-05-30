@@ -1,7 +1,6 @@
 
 import axios from 'axios';
-import { Action } from "@reduxjs/toolkit";
-import { ThunkAction } from 'redux-thunk';
+import { Action,ThunkAction} from "@reduxjs/toolkit";
 import { RootState } from '../rootReducer';
 import { LOGIN_STATUS, setLoginStatus, setUser, setLoginError, setSignupError } from '../slices/loginSlice';
 import wait from 'waait';

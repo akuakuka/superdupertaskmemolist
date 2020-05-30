@@ -1,7 +1,6 @@
 
 import axios from 'axios';
-import { Action } from "@reduxjs/toolkit";
-import { ThunkAction } from 'redux-thunk';
+import { Action,ThunkAction } from "@reduxjs/toolkit";
 import { RootState } from '../rootReducer';
 import { initMemos, addMemo,removeMemo,updateMemo} from '../slices/memoSlice';
 import IMemo from '../../models/Memo';
