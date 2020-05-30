@@ -1,97 +1,118 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewMemo } from '../state/thunks/memoThunk';
+import { addNewMemo, doUpdateMemo, reOrderMemos } from '../state/thunks/memoThunk';
 import { NavBar } from './NavBar';
 import { MemoPanel } from './MemoPanel';
-import { Box, Input, Stack, Button } from '@chakra-ui/core';
+import { Box, Input, Stack, Button, IconButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody } from '@chakra-ui/core';
 import { RootState } from '../state/rootReducer';
 import { DragDropContext } from 'react-beautiful-dnd';
 import IMemo from '../models/Memo';
-import { setMemoState, updateMemo } from '../state/slices/memoSlice';
+import { setMemoState } from '../state/slices/memoSlice';
 import { getPanels, addNewPanel } from '../state/thunks/panelThunk';
 import { getVerifyCode } from '../state/thunks/pluginThunk';
+import { Memo } from './Memos/Memo';
 
 
 export const MainView = () => {
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
+    const [panelTitle, setPanelTitle] = useState("")
     const Panels = useSelector((state: RootState) => state.panelState.panels);
     const Memos = useSelector((state: RootState) => state.memoState.memos);
     const dispatch = useDispatch();
 
     useEffect(() => {
-       // dispatch(getMemos())
+        // dispatch(getMemos())
         dispatch(getPanels())
-        
-    },[dispatch])
 
-    const reorder = (list: any, startIndex: number, endIndex: number): IMemo[] => {
+    }, [dispatch])
+
+    const getPanelsMemos = (panelID: string): IMemo[] => {
+        return Memos.filter(m => m.panelID === panelID)
+    }
+    //@ts-ignore
+    const handlePanelTitleChange = event => setPanelTitle(event.target.value);
+    // const reorder = (list: IMemo[], startIndex: number, endIndex: number,panelID:string): IMemo[] => {
+    //     // const panelsMemos = list.filter(m => m.panelID === panelID)
+    //     // const top = panelsMemos[startIndex]
+    //     // const bottom = panelsMemos[endIndex]
+
+    //     let memoToChange = getPanelsMemos(panelID)[startIndex]
+    //     dispatch(doUpdateMemo(memoToChange))
+    //     return list
+    //    // return result;
+    // };
+
+    const reorder = (list: any, startIndex: number, endIndex: number, panelID: string): IMemo[] => {
         const result: IMemo[] = Array.from(list);
         const [removed] = result.splice(startIndex, 1);
         result.splice(endIndex, 0, removed);
 
         return result;
     };
-
     const moveMemo = (memo: IMemo, droppableSource: any, droppableDestination: any) => {
-        console.log(memo.panelID)
+        console.log("movememo")
         if (memo.panelID === droppableSource) {
-            console.log('sama');
-            console.log(droppableDestination)
+
             return Memos;
         } else {
-            console.log('ei sasama');
-            console.log(droppableDestination);
+
             const newUpdatedMemo: IMemo = {
-             ...memo,
-             panelID: droppableDestination.droppableId,
-             };
-            dispatch(updateMemo(newUpdatedMemo));
-   
+                ...memo,
+                panelID: droppableDestination.droppableId,
+            };
+            dispatch(doUpdateMemo(newUpdatedMemo));
+
             return Memos;
         }
     };
 
     const onDragEnd = async (result: any) => {
+
         const { source, destination } = result;
-        console.log(result)
+        console.log(`Sourcce : ${JSON.stringify(source)} destination: ${JSON.stringify(destination)}`)
         if (!destination) {
             return;
         }
         if (source.droppableId === destination.droppableId) {
+
+
             const reOrderedMemos: IMemo[] = reorder(
                 Memos,
                 result.source.index,
                 result.destination.index,
+                destination.droppableId
             );
-            console.log("ReORdering")
-            dispatch(await setMemoState(reOrderedMemos));
+
+            dispatch(setMemoState(reOrderedMemos));
+            dispatch(reOrderMemos(Memos, destination.droppableId))
         } else {
             const memoToUpdate: IMemo[] = Memos.filter((m) => m.memoID === result.draggableId);
             const result2 = moveMemo(memoToUpdate[0], source, destination);
-            console.log('else move');
-            console.log(result2)
-             // dispatch(setMemoState(result2))
+            console.log("ELSE ELSE")
+            //   console.log(result2)
+            // dispatch(setMemoState(result2))
 
         }
         if (destination.index === source.index) {
+            console.log("ELSE ELSE ELSE")
             return;
         }
 
     }
 
     const dSTART = () => { console.log("start") }
-    const dUPDATE = () => { console.log("update") }
+    const dUPDATE = (result: any) => { console.log(result) }
     //@ts-ignore
     const handleChange = (event) => setTitle(event.target.value);
     //@ts-ignore
     const handleContentChange = (event) => setContent(event.target.value);
     const onMemoSubmit = async () => {
-        console.log("submitting")
+
         dispatch(await addNewMemo(content, title))
     }
     const addPanel = async () => {
-        dispatch(await addNewPanel("bnewPanel"))
+        dispatch(await addNewPanel(panelTitle))
     }
     const getCode = async () => {
         dispatch(await getVerifyCode("telegram"))
@@ -110,13 +131,21 @@ export const MainView = () => {
                         )
                     })}
                 </DragDropContext>
-                <Button onClick={addPanel}>addnewpanel!</Button>
-                <Stack spacing={3}>
-                    <Input placeholder="Title" size="lg" onChange={handleChange} />
-                    <Input placeholder="Content" size="sm" onChange={handleContentChange} />
-                    <Button onClick={onMemoSubmit}>SaveMemo!</Button>
-                </Stack>
-                <Button onClick={getCode}>getCode!</Button>
+                <Box >
+                    <Popover>
+                        <PopoverTrigger>
+                            <IconButton aria-label="add new panel" icon="add" size="sm"  marginTop="10px" />
+                        </PopoverTrigger>
+                        <PopoverContent zIndex={4}>
+                            <PopoverArrow />
+                            <PopoverCloseButton />
+                            <PopoverBody>Input new Panel header</PopoverBody>
+                            <Input onChange={handlePanelTitleChange}></Input>'
+                            <IconButton aria-label="add new panel" icon="add" size="xs"  marginTop="10px" onClick={addPanel}/>
+                        </PopoverContent>
+                    </Popover>
+
+                </Box>
             </Box>
 
         </>

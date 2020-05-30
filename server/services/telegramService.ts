@@ -35,6 +35,7 @@ bot.onText(/\/verify/, async (msg) => {
       plugin.chatID = chatId.toString();
       plugin.type = "telegram";
       plugin.user = foundUser;
+      plugin.userID = foundUser.userID
       await plugin.save();
       bot.sendMessage(chatId, "verify ok!")
     } catch(e) {
@@ -68,6 +69,7 @@ bot.onText(/\/start/, async (msg) => {
 bot.onText(/\/memo/, async (msg) => {
   const [start, memo] = msg.text.toString().split(" ");
   const chatId = msg.chat.id;
+  console.log(chatId)
   bot.sendMessage(chatId,"adding memo!")
   try {
     const user = await getUserFromChatID(chatId);
@@ -75,6 +77,8 @@ bot.onText(/\/memo/, async (msg) => {
     if (user) {
       await createNewMemo(user,"TelegramMemo!",memo)
       bot.sendMessage(chatId,"New memo added!")
+    } else {
+      bot.sendMessage(chatId,"Error finding user!")
     }
   } catch (e) {
     bot.sendMessage(chatId, JSON.stringify(e))

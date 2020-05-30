@@ -11,46 +11,46 @@ export type PanelThunk = ThunkAction<void, RootState, null, Action<string>>;
 
 
 export const getPanels = (): PanelThunk => async (dispatch) => {
-console.log("Thunkin sisäl")
     try {
-        const { data } = await axios.get(`${backendURL}/panel/`,{withCredentials:true})
+        const { data } = await axios.get(`${backendURL}/panel/`, { withCredentials: true })
         console.log("Get Panels?=")
-        console.log(data)
         await dispatch(initPanels(data))
-      //  console.log(response.data.token)
-    } catch(e) {
+        //  console.log(response.data.token)
+    } catch (e) {
         console.log(e)
-    } 
+    }
 };
 
-export const addNewPanel = (title:string,): PanelThunk => async (dispatch) => {
- 
+export const addNewPanel = (title: string, ): PanelThunk => async (dispatch) => {
+
     try {
-            const response = await axios.request({ url: `${backendURL}/panel`, withCredentials:true ,method: 'POST', data: { title }});
-            console.log(response)
-            const newPanel:IPanel = response.data;
-            dispatch(addPanel(newPanel))
-      //  console.log(response.data.token)
-    } catch(e) {
+        const response = await axios.request({ url: `${backendURL}/panel`, withCredentials: true, method: 'POST', data: { title } });
+        const newPanel: IPanel = response.data;
+        dispatch(addPanel(newPanel))
+        //  console.log(response.data.token)
+    } catch (e) {
         console.log(e)
-    } 
+    }
 };
 
-export const removePanel = (): PanelThunk => async (dispatch) => {
+export const removePanel = (panelID:string): PanelThunk => async (dispatch) => {
+    console.log("remove panel thunk")
     try {
-        const { data } = await axios.get(`${backendURL}/panel/`,{withCredentials:true})
-        dispatch(initPanels(data))
-    } catch(e) {
+        const { data } = await axios.delete(`${backendURL}/panel/${panelID}`, { withCredentials: true })
+        console.log(data)
+        //dispatch(initPanels(data))
+    } catch (e) {
         console.log(e)
-    } 
+    }
 };
 
-export const updatePanelTitle = (title:string): PanelThunk => async (dispatch) => {
+export const updatePanelTitle = (title: string,panelID:string): PanelThunk => async (dispatch) => {
     try {
-        const { updatedPanel } = await axios.post(`${backendURL}/panel/`,{title:title},{withCredentials:true})
+        const { updatedPanel } = await axios.put(`${backendURL}/panel/${panelID}`, { title: title }, { withCredentials: true });
+        console.log(updatedPanel)
         dispatch(updatePanel(updatedPanel))
-      //  console.log(response.data.token)
-    } catch(e) {
+        //  console.log(response.data.token)
+    } catch (e) {
         console.log(e)
-    } 
+    }
 };

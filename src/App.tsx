@@ -14,7 +14,10 @@ import { ThemeProvider,theme } from "@chakra-ui/core";
 import 'semantic-ui-css/semantic.min.css'
 import { MainView } from './components/MainView';
 import { Login } from './components/login';
+import { Login2 } from './components/Login2';
 import { MapView } from './components/Map/MapView';
+import { Settings } from './components/Settings';
+import { getUser } from './state/thunks/loginThunk';
 
 
 //import theme from '@rebass/preset'
@@ -22,9 +25,10 @@ import { MapView } from './components/Map/MapView';
 const App = () => {
  // const loggedIn = useSelector((state: RootState) => state.loginState.loggedIn);
   const loginState = useSelector((state: RootState) => state.loginState.loggedIn);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    //  dispatch(checkLogin());
+      dispatch(getUser());
   }, [dispatch]);
 // <Login />
 
@@ -37,6 +41,9 @@ const App = () => {
     <Route exact path={"/signup"} component={Signup} />
     <PrivateRoute exact path={"/main"} component={MainView} loginState={loginState}/>
     <PrivateRoute exact path={"/mapview"} component={MapView} loginState={loginState}/>
+    <PrivateRoute exact path={"/settings"} component={Settings} loginState={loginState}/>
+
+    
   </ThemeProvider>
   
 //         {loggedIn === LOGIN_STATUS.CHECKING_LOGIN_STATUS && <h1>Loading...</h1>}

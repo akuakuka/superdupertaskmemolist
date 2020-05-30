@@ -8,10 +8,9 @@ import { NavBar } from '../NavBar';
 
 
 export const MapView = () => {
-  const position = { lat: 1, lng: 2 }
+  const position = { lat: 60.205238, lng: 24.654079 }
   const markerState = useSelector((state: RootState) => state.mapState.locations);
   const handleDelete = async (locationID:string) => {
-    console.log("asdasd")
     await dispatch(deleteLocation(locationID))
   }
   const dispatch = useDispatch()
@@ -23,8 +22,8 @@ export const MapView = () => {
       <NavBar />
       <Map
         center={position}
-        zoom={13}
-        style={{ height: "800px" }}
+        zoom={7}
+        style={{ height: "100vh", marginLeft:"5rem" }}
       >
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

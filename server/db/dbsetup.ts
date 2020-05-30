@@ -26,15 +26,16 @@ export const createDBConnection = async () => {
         );
         await connection.synchronize();
         console.log("Database Connected!")
+        return connection
        
     } catch (e) {
         console.log(e)
     }
 }
 
-export const getSessionStore = async () => {
+export const getSessionStore = () => {
     try {
-        const repository = await getRepository(Session);
+        const repository = getRepository(Session);
         return new TypeormStore({ repository })
     } catch (e) {
         console.log(e)

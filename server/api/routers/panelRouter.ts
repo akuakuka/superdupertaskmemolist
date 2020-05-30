@@ -24,11 +24,13 @@ panelRouter.get("/:id", async (req: RequestWithUser, res: Response) => {
 })
 
 panelRouter.delete("/:id", async (req: RequestWithUser, res: Response) => {
+    console.log("delete panel route")
     res.send(await deletePanel(req.user, req.params.id))
 })
 panelRouter.put("/:id", async (req: RequestWithUser, res: Response) => {
     const { title } = req.body
-    res.send(await updatePanel(req.user, req.params.id, title))
+    const updatedPAnel = await updatePanel(req.user, req.params.id, title)
+    res.send(updatedPAnel)
 })
 
 

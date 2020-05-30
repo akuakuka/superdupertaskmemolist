@@ -64,7 +64,9 @@ const createNewSocialUser = async (email, socialID, service) => {
 }
 
 export const ensureAuthenticated = async (req, res, next) => {
-
+  if(process.env.NODE_ENV==="develop") {
+    return next();
+  }
   if (req.isAuthenticated()) {
     console.log("IS AUTHENTICATED!")
     return next();
@@ -72,15 +74,17 @@ export const ensureAuthenticated = async (req, res, next) => {
   console.log("NOT AUTHENTICATED!")
   res.redirect("/");
 };
+
 passport.serializeUser(async (user: User, done) => {
   console.log("Serializeuser sisäl")
-
+  console.log(user)
   done(null, user)
 });
 passport.deserializeUser(async (user: User, done) => {
   console.log("DESERIALIZE SISÄL")
   const found = await User.findOne({ userID: user.userID })
   if (found) {
+    console.log("found")
     done(null, found);
   } else {
     done('Error when deserializing User', null);

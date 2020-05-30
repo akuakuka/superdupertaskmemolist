@@ -23,11 +23,14 @@ await panel.save();
 return panel;
 }
 
-export const deletePanel = async (User: User,memoID) => {
-   // return await Panel.delete({userID:User,memoID:memoID});
+export const deletePanel = async (User: User,panelID) => {
+    console.log("delete panel controller")
+  await Panel.delete({userID:User,panelID:panelID});
+  return Panel.find({userID:User});
 }
 
 export const updatePanel = async (User:User,panelID,title) => {
+    console.log("UPATRE PANEL")
     const newPanel = await Panel.findOne({userID:User,panelID:panelID})
     newPanel.title = title;
     await newPanel.save();

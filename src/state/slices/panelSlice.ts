@@ -27,6 +27,8 @@ const PanelStateSlice = createSlice({
             return state;
         },
         updatePanel(state, action: PayloadAction<IPanel>) {
+            console.log("slicen sisäl")
+            console.log(action)
             state.panels = state.panels.filter(panels => panels.panelID !== action.payload.panelID);
             state.panels.push(action.payload);
             return state;

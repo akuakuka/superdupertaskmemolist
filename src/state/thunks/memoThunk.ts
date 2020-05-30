@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Action } from "@reduxjs/toolkit";
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../rootReducer';
-import { initMemos, addMemo,removeMemo} from '../slices/memoSlice';
+import { initMemos, addMemo,removeMemo,updateMemo} from '../slices/memoSlice';
 import IMemo from '../../models/Memo';
 import { backendURL } from '../../config/config';
 axios.defaults.withCredentials = true;
@@ -18,14 +18,25 @@ export const getMemos = (): MemoThunnk => async (dispatch) => {
 
     try {
         const { data } = await axios.get(`${backendURL}/memo/`,{withCredentials:true})
-        console.log("GETMEMOS?=")
-        console.log(data)
         await dispatch(initMemos(data))
       //  console.log(response.data.token)
     } catch(e) {
         console.log(e)
     } 
 };
+
+export const reOrderMemos = (memos:IMemo[],panelID:string): MemoThunnk => async (dispatch) => {
+    try {
+        const response = await axios.request({ url: `${backendURL}/memo/reorder`, method: 'post', data: { memos:memos,panelID:panelID },withCredentials:true});
+        //const { data:returndata } = await axios.put(`${backendURL}/memo/`,data:{memo},{withCredentials:true})
+       console.log(response)
+       
+        dispatch(updateMemo(response.data))
+      //  console.log(response.data.token)
+    } catch(e) {
+        console.log(e)
+    } 
+}
 
 export const addNewMemo = (content:string,title:string,): MemoThunnk => async (dispatch) => {
     console.log("ADdingNewMemo")
@@ -51,10 +62,13 @@ export const deleteMemo = (memo:IMemo): MemoThunnk => async (dispatch) => {
     } 
 };
 
-export const updateMemo = (): MemoThunnk => async (dispatch) => {
+export const doUpdateMemo = (memo:IMemo): MemoThunnk => async (dispatch) => {
     try {
-        const { data } = await axios.get(`${backendURL}/memo/`,{withCredentials:true})
-        dispatch(initMemos(data))
+        const response = await axios.request({ url: `${backendURL}/memo/${memo.memoID}`, method: 'put', data: { memo },withCredentials:true});
+        //const { data:returndata } = await axios.put(`${backendURL}/memo/`,data:{memo},{withCredentials:true})
+       console.log(response)
+       
+        dispatch(updateMemo(response.data))
       //  console.log(response.data.token)
     } catch(e) {
         console.log(e)
