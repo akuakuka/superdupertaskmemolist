@@ -1,7 +1,7 @@
 version: '3.5'
 
 services:
-  aenaeri-app:
+  superdupertaskmemolist:
     build: .
     ports:
       - "3001:3001"
@@ -15,8 +15,8 @@ services:
     environment:
       - NODE_ENV=development
       - SESSION_SECRET=ADfgajk23dsS!
-    networks:
-      - backend
+    # networks:
+    #   - backend
     command: npm run dev
   postgres:
     image: 'postgres:11.5'
@@ -29,10 +29,10 @@ services:
       - "5432:5432"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
-    networks:
-      - backend
+    # networks:
+    #   - backend
     logging:
       driver: 'none'
  
-networks:
-  backend:
+# networks:
+#   default:

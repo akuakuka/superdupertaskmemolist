@@ -8,7 +8,7 @@ interface IMemoProps {
 }
 
 export const Memo = (props: IMemoProps) => {
-    const {  content } = props.Memo;
+    const { content } = props.Memo;
   //  const dispatch = useDispatch();
     // const handleDelete = async () => {
     //     await dispatch(deleteMemo(props.Memo))

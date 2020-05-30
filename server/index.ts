@@ -8,6 +8,7 @@ createDBConnection().then(async () => {
  // const store = await getSessionStore()
  
    app.listen(parseInt(PORT), () => {
+
     console.log(`"Server running on port ${PORT}"`);
   });
 }).catch((err) => {

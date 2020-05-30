@@ -5,13 +5,14 @@ import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../rootReducer';
 import { LOGIN_STATUS, setLoginStatus, setUser, setLoginError, setSignupError } from '../slices/loginSlice';
 import wait from 'waait';
-
+import { backendURL } from '../../config/config';
 export type LoginThunk = ThunkAction<void, RootState, null, Action<string>>;
 
 export const doLogin = (username: string, password: string): LoginThunk => async (dispatch) => {
     const data = { username: username, password: password }
     try {
-        const response = await axios.post("http://localhost:3000/auth/local/login", data)
+        
+        const response = await axios.post(`${backendURL}/auth/local/login`, data)
         dispatch(setLoginStatus(LOGIN_STATUS.LOGGED_IN));
         dispatch(setUser(response.data.token));
         //  console.log(response.data.token)
@@ -26,7 +27,7 @@ export const doLogin = (username: string, password: string): LoginThunk => async
 
 export const getUser = (): LoginThunk => async (dispatch) => {
     try {
-        const response = await axios.get("http://localhost:3000/user", { withCredentials: true });
+        const response = await axios.get(`${backendURL}/user`, { withCredentials: true });
         console.log(response)
         dispatch(setLoginStatus(LOGIN_STATUS.LOGGED_IN));
         dispatch(setUser(response.data));
@@ -39,7 +40,7 @@ export const getUser = (): LoginThunk => async (dispatch) => {
 };
 export const doGoogleSigin = (): LoginThunk => async (dispatch) => {
     try {
-        const response = await axios.get("http://localhost:3000/auth/google");
+        const response = await axios.get(`${backendURL}/auth/google`);
         console.log(response)
         return response;
     } catch (e) {
@@ -51,7 +52,7 @@ export const doGoogleSigin = (): LoginThunk => async (dispatch) => {
 export const doSignup = (username: string, password: string): LoginThunk => async (dispatch) => {
     const data = { username: username, password: password }
     try {
-        const response = await axios.post("http://localhost:3000/auth/local/register", data,{withCredentials:true})
+        const response = await axios.post(`${backendURL}/auth/local/register`, data,{withCredentials:true})
         const token = `Bearer ${response.data.token}`
         axios.defaults.headers.authentication = token;
         localStorage.setItem('token', token)

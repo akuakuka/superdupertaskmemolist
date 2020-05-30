@@ -39,7 +39,6 @@ app.use(session({
   }));
 
 
-
 app.use(urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session())
@@ -53,7 +52,6 @@ app.use("/location",debugLogger,ensureAuthenticated,LocationRouter)
 app.use("/memo",debugLogger,ensureAuthenticated,memoRouter);
 app.use("/panel",debugLogger,ensureAuthenticated,panelRouter);
 app.use("/user",debugLogger,ensureAuthenticated,userRouter);
-
 
 app.get("/", (req, res) => {
   res.send("ok")

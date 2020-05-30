@@ -30,8 +30,8 @@ const App = () => {
 
 // <CSSReset />
   return (
-    <ThemeProvider theme={theme}>
-   
+  <ThemeProvider theme={theme}>
+    <Route exact path={"/"} component={Login} />
     <Route exact path={"/callback"} component={Callback} />
     <Route exact path={"/login"} component={Login} />
     <Route exact path={"/signup"} component={Signup} />

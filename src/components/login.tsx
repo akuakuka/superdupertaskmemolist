@@ -10,6 +10,7 @@ import { Link, RouteComponentProps } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../state/rootReducer';
 import ".././svg.css"
+import { backendURL } from '../config/config';
 
 
 export const Login: React.FC<RouteComponentProps> = () => {
@@ -25,7 +26,7 @@ export const Login: React.FC<RouteComponentProps> = () => {
     }
     const SocialhandleLogin = async (provider:string) => {
       //dispatch(doGoogleSigin());
-      window.location.href = `http://localhost:3000/auth/${provider}`
+      window.location.href = `${backendURL}/auth/${provider}`
 }
     return (
         <div className="login-svg-bg">
