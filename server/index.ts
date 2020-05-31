@@ -8,6 +8,7 @@ import { urlencoded, json } from "body-parser";
 import * as cors from "cors"
 import { bot } from "./services/telegramService";
 import passport = require("passport");
+import * as path from 'path';
 import { debugLogger } from "./middleware/degublogger";
 import { googleRouter } from "./api/routers/googleRouter";
 import { localRouter } from "./api/routers/localRouter";
@@ -51,6 +52,14 @@ createDBConnection().then((connection) => {
   app.use(passport.initialize());
   app.use(passport.session())
   app.use(json()); 
+
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'public')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    });
+}
   
   app.use("/auth/google", debugLogger,googleRouter);
   app.use("/auth/local", debugLogger,localRouter);

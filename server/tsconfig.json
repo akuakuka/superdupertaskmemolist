@@ -4,11 +4,11 @@
          "es5",
          "es6"
       ],
-      "rootDir": ".",
+      "outDir": "../dist",                        /* Redirect output structure to the directory. */
+    "rootDir": "./",   
       "target": "es5",
       "module": "commonjs",
       "moduleResolution": "node",
-      "outDir": "./build",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true
