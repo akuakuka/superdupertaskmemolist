@@ -1,7 +1,7 @@
 
 
 import { createDBConnection } from './db/dbsetup';
-import { PORT, SESSION_SECRET, FRONTEND_CORSURL } from './config/config';
+import { SESSION_SECRET, FRONTEND_CORSURL } from './config/config';
 import * as express from 'express';
 import * as session from "express-session"
 import { urlencoded, json } from "body-parser";
