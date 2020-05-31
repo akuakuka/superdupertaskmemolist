@@ -10,3 +10,4 @@ export const getBackEndUrl = () => {
     return backendURL
 }
 
+export const backendURL = getBackEndUrl()
