@@ -52,14 +52,8 @@ createDBConnection().then((connection) => {
   app.use(passport.initialize());
   app.use(passport.session())
   app.use(json()); 
+console.log(process.env.NODE_ENV)
 
-  if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'public')));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'public', 'index.html'));
-    });
-}
   
   app.use("/auth/google", debugLogger,googleRouter);
   app.use("/auth/local", debugLogger,localRouter);
@@ -70,9 +64,16 @@ createDBConnection().then((connection) => {
   app.use("/panel",debugLogger,ensureAuthenticated,panelRouter);
   app.use("/user",debugLogger,ensureAuthenticated,userRouter);
   
-  app.get("/", (req, res) => {
-    res.send("ok")
+  app.get("/test", (req, res) => {
+    res.json("testi ok!")
   })
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'public')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    });
+}
 
    app.listen(parseInt(PORT), () => {
 

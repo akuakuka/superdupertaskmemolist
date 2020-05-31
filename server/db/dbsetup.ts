@@ -22,7 +22,7 @@ export const createDBConnection = async () => {
         const connection = await createConnection(
             {
                 type: 'postgres' as 'postgres',
-                url: dburl,
+                url: createPGDBURL(),
                 entities: [
                     __dirname + "/**/."
                 ],
