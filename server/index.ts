@@ -24,8 +24,7 @@ import {  Repository } from "typeorm";
 import { Session } from "./db/entity/Session";
 import "reflect-metadata";
 console.log("indexin sisäl")
-//import session = require("express-session");
-console.log(`PORTTI : ${PORT}`)
+
 createDBConnection().then((connection) => {
   console.log("indexin sisäl")
   const sessionRepo = connection.getRepository(Session)
@@ -74,10 +73,10 @@ console.log(process.env.NODE_ENV)
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
     });
 }
+  const port = process.env.PORT || 3000
+   app.listen(port, () => {
 
-   app.listen(process.env.PORT || 5000, () => {
-
-    console.log(`"Server running on port ${process.env.PORT}"`);
+    console.log(`"Server running on port ${port}"`);
   });
 }).catch((err) => {
    console.log("Failed to start!")
