@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Icon } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 
 

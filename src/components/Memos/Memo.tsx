@@ -3,7 +3,6 @@ import IMemo from '../../models/Memo';
 import { Flex, Box, Text, Badge, IconButton } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
 import { deleteMemo } from '../../state/thunks/memoThunk';
-import { initMemos } from '../../state/slices/memoSlice';
 
 
 interface IMemoProps {

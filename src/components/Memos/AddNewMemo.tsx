@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Box, Icon, Editable, EditableInput, EditablePreview } from '@chakra-ui/core';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Box, Editable, EditableInput, EditablePreview } from '@chakra-ui/core';
 import { addNewMemo } from '../../state/thunks/memoThunk';
 
 

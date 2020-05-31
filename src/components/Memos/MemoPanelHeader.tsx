@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { Box, Icon, EditablePreview, EditableInput, Editable, ButtonGroup, IconButton, Flex, Text, Popover, PopoverTrigger, PopoverArrow, PopoverBody, PopoverContent, Input, PopoverCloseButton, useToast } from '@chakra-ui/core';
-import { Link } from 'react-router-dom';
+import { Box,IconButton, Flex, Text, Popover, PopoverTrigger, PopoverArrow, PopoverBody, PopoverContent, Input, PopoverCloseButton, useToast } from '@chakra-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { updatePanel } from '../../state/slices/panelSlice';
 import { updatePanelTitle, removePanel } from '../../state/thunks/panelThunk';
 import { RootState } from '../../state/rootReducer';
 

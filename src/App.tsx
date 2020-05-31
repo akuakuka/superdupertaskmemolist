@@ -14,7 +14,6 @@ import { ThemeProvider,theme } from "@chakra-ui/core";
 import 'semantic-ui-css/semantic.min.css'
 import { MainView } from './components/MainView';
 import { Login } from './components/login';
-import { Login2 } from './components/Login2';
 import { MapView } from './components/Map/MapView';
 import { Settings } from './components/Settings';
 import { getUser } from './state/thunks/loginThunk';

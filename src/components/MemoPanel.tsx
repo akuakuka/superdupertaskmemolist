@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMemos } from '../state/thunks/memoThunk';
-import { Box, Text } from "@chakra-ui/core";
+import { Box } from "@chakra-ui/core";
 import IPanel from '../models/Panel';
 import { RootState } from '../state/rootReducer';
 import { Draggable, Droppable } from 'react-beautiful-dnd';

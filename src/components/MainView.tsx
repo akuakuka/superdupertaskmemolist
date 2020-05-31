@@ -1,47 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewMemo, doUpdateMemo, reOrderMemos } from '../state/thunks/memoThunk';
+import {  doUpdateMemo, reOrderMemos } from '../state/thunks/memoThunk';
 import { NavBar } from './NavBar';
 import { MemoPanel } from './MemoPanel';
-import { Box, Input, Stack, Button, IconButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody } from '@chakra-ui/core';
+import { Box, Input, IconButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverBody } from '@chakra-ui/core';
 import { RootState } from '../state/rootReducer';
 import { DragDropContext } from 'react-beautiful-dnd';
 import IMemo from '../models/Memo';
 import { setMemoState } from '../state/slices/memoSlice';
 import { getPanels, addNewPanel } from '../state/thunks/panelThunk';
-import { getVerifyCode } from '../state/thunks/pluginThunk';
-import { Memo } from './Memos/Memo';
+
+
 
 
 export const MainView = () => {
-    const [title, setTitle] = useState("")
-    const [content, setContent] = useState("")
     const [panelTitle, setPanelTitle] = useState("")
     const Panels = useSelector((state: RootState) => state.panelState.panels);
     const Memos = useSelector((state: RootState) => state.memoState.memos);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // dispatch(getMemos())
+        
         dispatch(getPanels())
 
     }, [dispatch])
 
-    const getPanelsMemos = (panelID: string): IMemo[] => {
-        return Memos.filter(m => m.panelID === panelID)
-    }
+    // const getPanelsMemos = (panelID: string): IMemo[] => {
+    //     return Memos.filter(m => m.panelID === panelID)
+    // }
     //@ts-ignore
     const handlePanelTitleChange = event => setPanelTitle(event.target.value);
-    // const reorder = (list: IMemo[], startIndex: number, endIndex: number,panelID:string): IMemo[] => {
-    //     // const panelsMemos = list.filter(m => m.panelID === panelID)
-    //     // const top = panelsMemos[startIndex]
-    //     // const bottom = panelsMemos[endIndex]
-
-    //     let memoToChange = getPanelsMemos(panelID)[startIndex]
-    //     dispatch(doUpdateMemo(memoToChange))
-    //     return list
-    //    // return result;
-    // };
 
     const reorder = (list: any, startIndex: number, endIndex: number, panelID: string): IMemo[] => {
         const result: IMemo[] = Array.from(list);
@@ -88,7 +76,7 @@ export const MainView = () => {
             dispatch(reOrderMemos(Memos, destination.droppableId))
         } else {
             const memoToUpdate: IMemo[] = Memos.filter((m) => m.memoID === result.draggableId);
-            const result2 = moveMemo(memoToUpdate[0], source, destination);
+             moveMemo(memoToUpdate[0], source, destination);
             console.log("ELSE ELSE")
             //   console.log(result2)
             // dispatch(setMemoState(result2))
@@ -104,19 +92,11 @@ export const MainView = () => {
     const dSTART = () => { console.log("start") }
     const dUPDATE = (result: any) => { console.log(result) }
     //@ts-ignore
-    const handleChange = (event) => setTitle(event.target.value);
-    //@ts-ignore
-    const handleContentChange = (event) => setContent(event.target.value);
-    const onMemoSubmit = async () => {
 
-        dispatch(await addNewMemo(content, title))
-    }
     const addPanel = async () => {
         dispatch(await addNewPanel(panelTitle))
     }
-    const getCode = async () => {
-        dispatch(await getVerifyCode("telegram"))
-    }
+
     return (
         <>
             <NavBar />

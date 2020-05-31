@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Box, Icon,Button} from '@chakra-ui/core';
-import { Link } from 'react-router-dom';
+import { Box,Button} from '@chakra-ui/core';
 import { NavBar } from './NavBar';
 import { RootState } from '../state/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,7 +8,6 @@ import { getVerifyCode } from '../state/thunks/pluginThunk';
 
 
 export const Settings = () => {
-    const position = { lat: 60.205238, lng: 24.654079 }
     const pluginState = useSelector((state: RootState) => state.pluginState.telegramVerify);
     const dispatch = useDispatch()
     const handleGetCode = async () => {

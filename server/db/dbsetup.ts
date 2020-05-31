@@ -2,22 +2,29 @@
 import { createConnection, getRepository } from "typeorm";
 import { Session } from "./entity/Session"
 import { TypeormStore } from 'typeorm-store';
-import { POSTGRES_DATABASE, POSTGRES_IP, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_USERNAME } from "../config/config";
+import { POSTGRES_DATABASE, POSTGRES_IP, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_USERNAME, DATABASE_URL } from "../config/config";
 import { User } from "./entity/User";
 
 //import { TypeormStore, SessionEntity } from 'typeorm-store';
 
 export const createDBConnection = async () => {
-   //entities: [__dirname + "/**/."],
+    console.log("Creating db connection!")
+    let devpgurl
+    if(process.env.NODE_ENV === "develop") {
+        console.log("if")
+        devpgurl = `postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_IP}:${POSTGRES_PORT}/${POSTGRES_DATABASE}`
+    } else {
+        console.log("else")
+        devpgurl = DATABASE_URL
+    }
+    console.log(devpgurl)
+   // url: 'postgres://test:test@localhost/test'
     try {
         const connection = await createConnection(
             {
+                
                 type: "postgres",
-                host: POSTGRES_IP,
-                port: parseInt(POSTGRES_PORT),
-                username: POSTGRES_USERNAME,
-                password: POSTGRES_PASSWORD,
-                database: POSTGRES_DATABASE,
+                url:devpgurl,
                 entities: [
                     __dirname + "/**/."
                 ],
