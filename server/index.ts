@@ -1,15 +1,11 @@
 
 
-import { createDBConnection, getSessionStore } from './db/dbsetup';
-
+import { createDBConnection } from './db/dbsetup';
 import { PORT, SESSION_SECRET, FRONTEND_CORSURL } from './config/config';
-
 import * as express from 'express';
 import * as session from "express-session"
 import { urlencoded, json } from "body-parser";
 import * as cors from "cors"
-import {PGStore} from "connect-pg-simple"
-import Pool from "pg-pool"
 import { bot } from "./services/telegramService";
 import passport = require("passport");
 import { debugLogger } from "./middleware/degublogger";
@@ -23,11 +19,14 @@ import { panelRouter } from "./api/routers/panelRouter";
 import { memoRouter } from "./api/routers/memoRouter";
 import { userRouter } from "./api/routers/userRouter";
 import { TypeormStore, SessionEntity } from "typeorm-store";
-import { getConnection, Repository,getRepository } from "typeorm";
+import {  Repository } from "typeorm";
 import { Session } from "./db/entity/Session";
+import "reflect-metadata";
+console.log("indexin sisäl")
 //import session = require("express-session");
-console.log(`"PORTTI${PORT}"`)
+console.log(`PORTTI : ${PORT}`)
 createDBConnection().then((connection) => {
+  console.log("indexin sisäl")
   const sessionRepo = connection.getRepository(Session)
   const app = express();
   console.log(bot)
@@ -42,8 +41,7 @@ createDBConnection().then((connection) => {
         path:"/",
         maxAge: 1000 * 60 * 60 * 24 * 31 // 1 month
       },
-      store: new TypeormStore({
-        repository: sessionRepo as unknown as Repository<SessionEntity>}),
+      store: new TypeormStore({repository: sessionRepo as unknown as Repository<SessionEntity>}),
       resave: true,
       saveUninitialized: true
     }));
