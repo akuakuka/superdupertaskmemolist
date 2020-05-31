@@ -10,9 +10,8 @@ if (fs.existsSync("./dist")) {
   fse.removeSync("./dist");
 }
 
-// childProcess.execSync("react-scripts build", { stdio: "inherit" });
+childProcess.execSync("react-scripts build", { stdio: "inherit" });
  childProcess.execSync("tsc -p server", { stdio: "inherit" });
 
 
 fse.moveSync("./build", "./dist/app/public", { overwrite: true });
-
