@@ -84,6 +84,27 @@ bot.onText(/\/memo/, async (msg) => {
     bot.sendMessage(chatId, JSON.stringify(e))
   }
 });
+bot.on('photo', async (msg) => {
+console.log("GOT PHOTO!")
+  const chatId = msg.chat.id;
+  bot.sendMessage(chatId, `GOT PHOTO!`)
+  console.log(msg)
+  // try {
+  //   const user = await getUserFromChatID(chatId);
+  //   console.log(user)
+  //   if (user) {
+  //     const city = await getCity(latitude,longitude)
+  //     const newLocationMemo = await createNewMemo(user,city,"Location")
+      
+  //     await createNewLocation(user,latitude,longitude,newLocationMemo)
+     
+  //     bot.sendMessage(chatId, `New Location saved. City: ${city}`)
+  //   }
+  // } catch (e) {
+  //   console.log(e)
+  //   bot.sendMessage(chatId, JSON.stringify(e))
+  // }
+});
 
 bot.on('location', async (msg) => {
 

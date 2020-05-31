@@ -39,6 +39,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "faker": "^4.1.0",
+    "leaflet": "^1.6.0",
     "node-geocoder": "^3.27.0",
     "node-telegram-bot-api": "^0.40.0",
     "nodemon": "^2.0.4",
@@ -70,7 +71,6 @@
     "waait": "^1.0.5"
   },
   "devDependencies": {
-    
     "prettier": "^1.19.1",
     "tslint": "^5.20.1",
     "tslint-eslint-rules": "^5.4.0",

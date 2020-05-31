@@ -11,8 +11,19 @@ interface IMemoProps {
 }
 
 export const Memo = (props: IMemoProps) => {
+    const dateNow = new Date()
+    const memoDate = new Date(props.Memo.createdDate)
+    const age = dateNow.getTime() - memoDate.getTime()
+    let isNew = false;
+    //  259200000
+      //  1625569
+    if (age < 25920000) {
+        isNew = true;
+    }
+    console.log(age)
+    console.log(isNew)
     const { content } = props.Memo;
-     const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const handleDelete = async () => {
         await dispatch(deleteMemo(props.Memo))
     }
@@ -31,10 +42,11 @@ export const Memo = (props: IMemoProps) => {
                 width="230px"
                 display="flex"
             >
-
-                <Badge variantColor="green">
+                {isNew ? <Badge variantColor="green">
                     New
-                    </Badge>
+                    </Badge> : <></>
+                }
+
 
                 <Text fontSize="sm">{content}</Text>
                 <IconButton size="xs" aria-label="delete" icon="close" onClick={handleDelete} />

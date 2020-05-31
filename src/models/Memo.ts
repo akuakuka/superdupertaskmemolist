@@ -7,5 +7,6 @@ export default interface IMemo {
     content: string
     User: User
     panelID:string;
-    panelIndex:number
+    panelIndex:number;
+    createdDate: Date
 }
