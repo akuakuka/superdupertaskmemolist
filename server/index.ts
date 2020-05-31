@@ -75,9 +75,9 @@ console.log(process.env.NODE_ENV)
     });
 }
 
-   app.listen(parseInt(PORT), () => {
+   app.listen(process.env.PORT || 5000, () => {
 
-    console.log(`"Server running on port ${PORT}"`);
+    console.log(`"Server running on port ${process.env.PORT}"`);
   });
 }).catch((err) => {
    console.log("Failed to start!")
