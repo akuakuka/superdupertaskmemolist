@@ -12,7 +12,7 @@ import { RootState } from '../state/rootReducer';
 import ".././svg.css"
 import ".././App.css"
 import { backendURL } from '../config/config';
-import { Box, Input, Stack, Icon, Flex, Tabs, TabList, TabPanels, Tab, TabPanel, Button } from '@chakra-ui/core';
+import { Box, Input, Stack, Icon, Flex,Text, Tabs, TabList, TabPanels, Tab, TabPanel, Button } from '@chakra-ui/core';
 import { motion } from "framer-motion";
 
 export const LoginChakra: React.FC<RouteComponentProps> = () => {
@@ -63,7 +63,9 @@ export const LoginChakra: React.FC<RouteComponentProps> = () => {
     }
     return (
         <div className="loginbg">
-
+            <Text> 
+                superdupertaskmemolist
+            </Text>
             <Box top="50%" left="50%" position="fixed" transform="translate(-50%, -50%)" backgroundColor="grey">
                 <Tabs isFitted variant="enclosed">
                     <TabList mb="1em">

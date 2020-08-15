@@ -4,11 +4,14 @@ import MemoSlice  from "./slices/memoSlice"
 import panelSlice  from "./slices/panelSlice"
 import mapSlice  from "./slices/mapSlice"
 import pluginSlice  from "./slices/pluginSlice"
-const rootReducer =combineReducers({ loginState: LoggedInStateSlice,
+import filterSlice  from "./slices/filterSlice"
+
+const rootReducer = combineReducers({ loginState: LoggedInStateSlice,
     memoState:MemoSlice,
     panelState:panelSlice,
     mapState: mapSlice,
-    pluginState:pluginSlice
+    pluginState:pluginSlice,
+    filterState: filterSlice
  });
 export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;

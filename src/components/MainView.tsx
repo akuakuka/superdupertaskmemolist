@@ -9,7 +9,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import IMemo from '../models/Memo';
 import { setMemoState } from '../state/slices/memoSlice';
 import { getPanels, addNewPanel } from '../state/thunks/panelThunk';
-
+import { Header } from "./Header"
 
 
 
@@ -100,6 +100,7 @@ export const MainView = () => {
     return (
         <>
             <NavBar />
+            <Header/>
             <Box width="100%" display="flex" marginBottom="10px" height="100vh" position="absolute" marginLeft="70px" backgroundColor="#181818">
                 <DragDropContext
                     onDragEnd={onDragEnd}
