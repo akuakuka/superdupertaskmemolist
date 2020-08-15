@@ -17,6 +17,7 @@ import { Login } from './components/login';
 import { MapView } from './components/Map/MapView';
 import { Settings } from './components/Settings';
 import { getUser } from './state/thunks/loginThunk';
+import { LoginChakra } from './components/LoginChakra';
 
 
 //import theme from '@rebass/preset'
@@ -34,10 +35,11 @@ const App = () => {
 // <CSSReset />
   return (
   <ThemeProvider theme={theme}>
-    <Route exact path={"/"} component={Login} />
+    <Route exact path={"/"} component={LoginChakra} />
     <Route exact path={"/callback"} component={Callback} />
-    <Route exact path={"/login"} component={Login} />
+    <Route exact path={"/login"} component={LoginChakra} />
     <Route exact path={"/signup"} component={Signup} />
+    <Route exact path={"/mai"} component={MainView} />
     <PrivateRoute exact path={"/main"} component={MainView} loginState={loginState}/>
     <PrivateRoute exact path={"/mapview"} component={MapView} loginState={loginState}/>
     <PrivateRoute exact path={"/settings"} component={Settings} loginState={loginState}/>

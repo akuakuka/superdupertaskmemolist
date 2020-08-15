@@ -9,6 +9,8 @@ interface MemoSate {
 const initialState: MemoSate = {
     memos:[]
 };
+
+
 const sortMemos  = ( a:IMemo, b:IMemo ) => {
     if ( a.panelIndex < b.panelIndex ){
       return -1;

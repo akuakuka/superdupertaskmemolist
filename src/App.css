@@ -1,5 +1,11 @@
 
 body, html {
     box-sizing: border-box;
-  }
   
+}
+.loginbg {
+    background: rgb(151,34,195);
+    background: linear-gradient(0deg, rgba(151,34,195,1) 0%, rgba(72,68,213,1) 100%);
+    height: 100vh;
+    z-index: -999;
+  }

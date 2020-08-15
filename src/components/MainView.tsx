@@ -100,7 +100,7 @@ export const MainView = () => {
     return (
         <>
             <NavBar />
-            <Box width="100%" display="flex" marginBottom="10px" height="100vh" position="absolute" marginLeft="70px" backgroundColor="gray.800">
+            <Box width="100%" display="flex" marginBottom="10px" height="100vh" position="absolute" marginLeft="70px" backgroundColor="#181818">
                 <DragDropContext
                     onDragEnd={onDragEnd}
                     onDragStart={dSTART}

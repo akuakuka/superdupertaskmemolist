@@ -49,6 +49,8 @@ export const Memo = (props: IMemoProps) => {
 
                 <Text fontSize="sm">{content}</Text>
                 <IconButton size="xs" aria-label="delete" icon="close" onClick={handleDelete} />
+                <Box backgroundColor="#FF0000" height="4px"/>
+
             </Box>
         </Flex>
     )

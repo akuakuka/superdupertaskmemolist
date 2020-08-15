@@ -6,6 +6,7 @@ export const debugLogger = (req, res, next) => {
       console.log(`ExpireDate = ${req.user.expireDate}`)
     } catch (e) {
       console.log("logger error")
+      console.log(e)
     }
 
     next()
