@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMemos } from '../state/thunks/memoThunk';
-import { Box, Heading } from "@chakra-ui/core";
+import { Box, Heading, Editable, EditablePreview, EditableInput } from "@chakra-ui/core";
 import IPanel from '../models/Panel';
 import { RootState } from '../state/rootReducer';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { Memo } from './Memos/Memo';
+import {updatePanel} from "../state/slices/panelSlice"
+import {updatePanelTitle} from "../state/thunks/panelThunk"
 import { MemoPanelHeader } from './Memos/MemoPanelHeader';
 import { AddNewMemo } from "./Memos/AddNewMemo"
 
@@ -21,6 +23,12 @@ export const MemoPanel = (props: IMemoPanelProps) => {
     useEffect(() => {
         dispatch(getMemos())
     }, [dispatch])
+//@ts-ignore
+const handlePanelTitleChange = (e) => {
+
+   dispatch(updatePanelTitle(e,props.panel.panelID));
+
+}
 
     const handleMemos = () => {
         return Memos.map((memo, index) => (
@@ -48,9 +56,9 @@ export const MemoPanel = (props: IMemoPanelProps) => {
 
             {(provided, snapshot) => (
 
-                <Box 
-                ref={provided.innerRef}
-                {...provided.droppableProps}
+                <Box
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
                     display="flex"
                     flexDirection="column"
                     margin="0 5px"
@@ -72,9 +80,17 @@ export const MemoPanel = (props: IMemoPanelProps) => {
                         margin="3px"
                         justifyContent="space-between"
                     >
-                       <Box alignSelf="flex-start"> {props.panel.title}</Box>  
-                       <Box alignSelf="flex-end"> {Memos.length}</Box>
-                        
+                        <Box alignSelf="flex-start">
+                        <Editable 
+                        defaultValue={props.panel.title}
+                            onSubmit={handlePanelTitleChange}>
+  <EditablePreview />
+  <EditableInput />
+</Editable>
+
+                        </Box>
+                        <Box alignSelf="flex-end"> {Memos.length}</Box>
+
                     </Box>
 
                     {handleMemos()}

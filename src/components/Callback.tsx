@@ -18,7 +18,7 @@ export const Callback: React.FC = () => {
 
     return (
         <div className="container">
-            {login === LOGIN_STATUS.LOGGED_IN ? <Redirect to='/main' /> : <div> Loading!... </div>}
+            {login === LOGIN_STATUS.LOGGED_IN ? <Redirect to='/main' /> : <div> Wait for redirect!... </div>}
         </div>
     )
 };

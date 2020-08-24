@@ -17,7 +17,7 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle, faSpotify,faGithub } from '@fortawesome/free-brands-svg-icons'
 
-export const LoginChakra: React.FC<RouteComponentProps> = () => {
+export const Login: React.FC<RouteComponentProps> = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -68,9 +68,8 @@ export const LoginChakra: React.FC<RouteComponentProps> = () => {
             <motion.div
                 animate={{ rotateY: 360 }}
                 transition={{ duration: 1.5 }}
-                whileHover={{ scale:0.7}}
             >
-                <Box left="50%" position="fixed" transform="translate(-50%, -50%)" paddingTop="800px">
+                <Box left="50%" position="fixed" transform="translate(-50%, -50%)" paddingTop="250px">
                     <Text fontSize="6xl" color="white"> superdupertaskmemolist</Text>
                 </Box>
             </motion.div>
