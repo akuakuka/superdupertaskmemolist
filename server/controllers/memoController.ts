@@ -3,9 +3,11 @@ import { User } from "../db/entity/User"
 import { Memo } from "../db/entity/Memo"
 import { Panel } from "../db/entity/Panel"
 import { getRepository } from "typeorm"
+import { Location } from "../db/entity/Location"
 
 export const getUsersMemos = async (User: User) => {
-    return await Memo.find({ userID: User });
+
+    return await Memo.find({relations:['Location','Picture']});
 }
 
 export const getMemo = async (memoID, user: User) => {

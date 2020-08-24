@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Generated, Column, BaseEntity, JoinColu
 import { User } from "./User";
 import { Panel } from "./Panel";
 import { Location } from "./Location";
+import { Picture } from "./Picture";
 
 @Entity()
 export class Memo extends BaseEntity {
@@ -26,6 +27,13 @@ export class Memo extends BaseEntity {
 
   @Column({ nullable: true })
   locationID: string;
+
+  @OneToOne(() => Picture, picture => picture.pictureID)
+  @JoinColumn({ name: "pictureID" })
+  Picture: Picture;
+
+  @Column({ nullable: true })
+  pictureID: string;
 
   @Column({ nullable: true })
   panelIndex: number;

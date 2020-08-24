@@ -13,6 +13,7 @@ import { RootState } from './state/rootReducer'
 import { ThemeProvider,theme } from "@chakra-ui/core";
 import 'semantic-ui-css/semantic.min.css'
 import { MainView } from './components/MainView';
+import { Pictures } from './components/Pictures';
 import { Login } from './components/login';
 import { MapView } from './components/Map/MapView';
 import { Settings } from './components/Settings';
@@ -40,10 +41,11 @@ const App = () => {
     <Route exact path={"/login"} component={LoginChakra} />
     <Route exact path={"/signup"} component={Signup} />
     <Route exact path={"/mai"} component={MainView} />
+ 
     <PrivateRoute exact path={"/main"} component={MainView} loginState={loginState}/>
     <PrivateRoute exact path={"/mapview"} component={MapView} loginState={loginState}/>
     <PrivateRoute exact path={"/settings"} component={Settings} loginState={loginState}/>
-
+    <PrivateRoute exact path={"/pictures"} component={Pictures} loginState={loginState}/>
     
   </ThemeProvider>
   

@@ -49,6 +49,25 @@ export const NavBar = () => {
                     </Box>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.1 }}>
+                    <Box marginLeft="auto" marginRight="auto" display="block" margin="10px">
+                        <Link
+                            to={{
+                                pathname: "/pictures",
+                            }}
+                        >
+                            <Icon name="view" size="30px" color="#909090">
+
+                            </Icon>
+                            <Text color="#909090">
+                                Pictures
+                    </Text>
+
+
+                        </Link>
+                    </Box>
+                </motion.div>
+
+                <motion.div whileHover={{ scale: 1.1 }}>
                     <Box marginLeft="auto" marginRight="auto" display="block" margin="10px" >
                         <Link
                             to={{

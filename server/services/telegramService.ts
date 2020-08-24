@@ -7,8 +7,11 @@ import * as TelegramBot from 'node-telegram-bot-api';
 import { VerifyPlugin } from "../db/entity/VerifyPlugin";
 import { createNewMemo } from "../controllers/memoController";
 import { createNewLocation } from "../controllers/locationController";
+import { createNewPicture } from "../controllers/pictureController";
 import {getCity} from "../services/geoService"
+
 export const bot = new TelegramBot(TELEGRAM_KEY, { polling: true });
+
 
 const getUserFromChatID = async (chatid): Promise<User> => {
 
@@ -20,6 +23,18 @@ const getUserFromChatID = async (chatid): Promise<User> => {
     console.log("CANT FIND USER!")
     return undefined
   }
+}
+
+const getLargestImage = (images:TelegramBot.PhotoSize[]) => {
+  const compare = (a, b)  => {
+    const aTotalSize = a.height * a.width;
+    const bTotalSize = b.height * b.width;
+    if (aTotalSize > bTotalSize) return -1;
+    if (bTotalSize > aTotalSize) return 1;
+  
+    return 0;
+  }
+  return images.sort(compare)[0]
 }
 
 bot.onText(/\/verify/, async (msg) => {
@@ -88,7 +103,23 @@ bot.on('photo', async (msg) => {
 console.log("GOT PHOTO!")
   const chatId = msg.chat.id;
   bot.sendMessage(chatId, `GOT PHOTO!`)
-  console.log(msg)
+  //console.log(msg)
+
+  try {
+    const filelink = await bot.getFileLink(getLargestImage(msg.photo).file_id)
+    console.log(msg.photo)
+    console.log(filelink)
+    const user = await getUserFromChatID(chatId);
+    const newPictureMemo = await createNewMemo(user,"picture","content");
+    const picture = await createNewPicture(user,newPictureMemo,filelink);
+    newPictureMemo.Picture = picture
+    await newPictureMemo.save()
+    bot.sendMessage(chatId, `Picture saved with id: ${picture.pictureID}`)
+  } catch(e) {
+    bot.sendMessage(chatId, `Error when saving picture!!: ${e}`)
+  }
+ 
+
   // try {
   //   const user = await getUserFromChatID(chatId);
   //   console.log(user)
@@ -117,9 +148,11 @@ bot.on('location', async (msg) => {
       const city = await getCity(latitude,longitude)
       const newLocationMemo = await createNewMemo(user,city,"Location")
       
-      await createNewLocation(user,latitude,longitude,newLocationMemo)
-     
+      const newLocation = await createNewLocation(user,latitude,longitude,newLocationMemo)
+      newLocationMemo.Location = newLocation
+      await newLocationMemo.save()
       bot.sendMessage(chatId, `New Location saved. City: ${city}`)
+
     }
   } catch (e) {
     console.log(e)

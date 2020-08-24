@@ -7,6 +7,7 @@ import { getLocations,deleteLocation } from '../../state/thunks/mapThunk';
 import { NavBar } from '../NavBar';
 
 
+
 export const MapView = () => {
   const position = { lat: 60.205238, lng: 24.654079 }
   const markerState = useSelector((state: RootState) => state.mapState.locations);
@@ -17,6 +18,7 @@ export const MapView = () => {
   useEffect(() => {
     dispatch(getLocations())
   }, [dispatch])
+
   return (
     <div>
       <NavBar />
@@ -31,12 +33,15 @@ export const MapView = () => {
         />
         {markerState.map(loc => {
           return (
-            <Marker key={loc.locationID} position={[parseFloat(loc.latitude), parseFloat(loc.longitude)]}>
+
+              <Marker key={loc.locationID} position={[parseFloat(loc.latitude), parseFloat(loc.longitude)]}>
               <Popup>
                 LocationID: {loc.locationID}
                 <Button variantColor="teal" variant="outline" onClick={() => handleDelete(loc.locationID)}>Delete</Button>
                 </Popup>
             </Marker>
+     
+            
           )
 
         })}
